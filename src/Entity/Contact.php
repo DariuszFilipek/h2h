@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraints\NotNull;
 #[ORM\HasLifecycleCallbacks]
 class Contact
 {
-    // dodać elementy null i asset
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
