@@ -1,0 +1,103 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Contacts API for H2H
+            description: This is a H2H test app.
+            version: 1.0.1
+        paths:
+            /api/contacts:
+                post:
+                    summary: Adds a contact to DB.
+                    description: Validates and adds a contact to database if correct. All fields are required
+                    requestBody:
+                        description: Request body in form of a json
+                        required: true
+                        content:
+                            application/json:
+                                schema:
+                                    properties: {
+                                        firstName: {
+                                            type: "string",
+                                            minLength: 5,
+                                            maxLength: 255
+                                        },
+                                        lastName: {
+                                            type: "string",
+                                            minLength: 5,
+                                            maxLength: 255
+                                        },
+                                        email: {
+                                            type: "string",
+                                            minLength: 5,
+                                            maxLength: 255
+                                        },
+                                        message: {
+                                            type: "string",
+                                        },
+                                        personalDataProcessingAgree: {
+                                            type: "boolean"
+                                        },
+                                    }
+                    responses:
+                        '201': # status code
+                            description: inserted ID
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            id:
+                                                type: integer
+                                                example: 8
+                                            status:
+                                                type: boolean
+                                                example: true
+                                            message:
+                                                type: string
+                                                example: Success
+                        '406':
+                            description: Not Acceptable
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            status:
+                                                type: boolean
+                                                example: false
+                                            message:
+                                                type: string
+                                                example: Error occured
+                        '422':
+                            description: Validation error
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
+                                                example: tutaj należałoby ustalić wygląd zwrotki walidacyjnej pochodzącej z DTO i kontrolera i ją stosownie opisać
+            /api/messages:
+                get:
+                    summary: Return all messages.
+                    description: Call returns a array of objects containing all messages stored in DB also with the contact ID.
+                    responses:
+                        '200':
+                            description: A array of message objects .
+                            content:
+                                application/json:
+                                    schema:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                  type: integer
+                                                  example: 4
+                                                message:
+                                                  type: string
+                                                  example: Test contact message
+    areas: # to filter documented areas
+        path_patterns:
+            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
